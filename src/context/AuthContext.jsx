@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Criar o contexto
 const AuthContext = createContext();
@@ -8,7 +8,7 @@ const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
   }
   return context;
 };
@@ -20,24 +20,31 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     setIsAuthenticated(true);
-    setUser(userData || { email: 'admin@biblioteca.com', name: 'Administrador' });
+    const usuario = userData || {
+      email: "admin@biblioteca.com",
+      name: "Administrador",
+    };
+    setUser(usuario);
+    localStorage.setItem("user", usuario);
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    localStorage.removeItem("user");
   };
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    setUser(savedUser);
+    setIsAuthenticated(true);
+  }, [user]);
 
   const value = {
     isAuthenticated,
     user,
     login,
-    logout
+    logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
