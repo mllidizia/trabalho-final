@@ -1,11 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaBook } from 'react-icons/fa';
-import { Button, Modal, Loading, Filter } from '../components';
-import { livrosApi, categorias } from '../services/api';
-import { useToggle } from '../hooks';
-import LivroForm from '../components/LivroForm';
-import LivroCard from '../components/LivroCard';
-import './Livros.css';
+import { useState, useEffect, useCallback } from "react";
+import { FaPlus, FaEdit, FaTrash, FaEye, FaBook } from "react-icons/fa";
+import { Button, Modal, Loading, Filter } from "../components";
+import { livrosApi, categorias } from "../services/api";
+import { useToggle } from "../hooks";
+import LivroForm from "../components/LivroForm";
+import LivroCard from "../components/LivroCard";
+import "./Livros.css";
+import {
+  buscarLivros,
+  deletarLivro,
+  editarLivro,
+  criarLivro as criarLivroApi,
+} from "../services/apiLivros";
 
 const Livros = () => {
   // Estados principais
@@ -13,13 +19,25 @@ const Livros = () => {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // Estados dos modais
-  const [modalCadastro, { toggle: toggleModalCadastro, setFalse: fecharModalCadastro }] = useToggle();
-  const [modalEdicao, { toggle: toggleModalEdicao, setFalse: fecharModalEdicao }] = useToggle();
-  const [modalVisualizacao, { toggle: toggleModalVisualizacao, setFalse: fecharModalVisualizacao }] = useToggle();
-  const [modalExclusao, { toggle: toggleModalExclusao, setFalse: fecharModalExclusao }] = useToggle();
-  
+  const [
+    modalCadastro,
+    { toggle: toggleModalCadastro, setFalse: fecharModalCadastro },
+  ] = useToggle();
+  const [
+    modalEdicao,
+    { toggle: toggleModalEdicao, setFalse: fecharModalEdicao },
+  ] = useToggle();
+  const [
+    modalVisualizacao,
+    { toggle: toggleModalVisualizacao, setFalse: fecharModalVisualizacao },
+  ] = useToggle();
+  const [
+    modalExclusao,
+    { toggle: toggleModalExclusao, setFalse: fecharModalExclusao },
+  ] = useToggle();
+
   // Estados de loading das operações
   const [loadingCreate, setLoadingCreate] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
@@ -30,15 +48,13 @@ const Livros = () => {
     try {
       setLoading(true);
       setError(null);
-      
-      const response = Object.keys(filtros).length > 0 
-        ? await livrosApi.search(filtros)
-        : await livrosApi.getAll();
-        
-      setLivros(response.data);
+
+      const data = await buscarLivros();
+
+      setLivros(data);
     } catch (err) {
-      setError('Erro ao carregar livros: ' + err.message);
-      console.error('Erro ao carregar livros:', err);
+      setError("Erro ao carregar livros: " + err.message);
+      console.error("Erro ao carregar livros:", err);
     } finally {
       setLoading(false);
     }
@@ -50,24 +66,27 @@ const Livros = () => {
   }, [carregarLivros]);
 
   // Aplicar filtros
-  const handleFilterChange = useCallback((filtros) => {
-    carregarLivros(filtros);
-  }, [carregarLivros]);
+  const handleFilterChange = useCallback(
+    (filtros) => {
+      carregarLivros(filtros);
+    },
+    [carregarLivros]
+  );
 
   // Criar novo livro - POST
   const criarLivro = async (dadosLivro) => {
     try {
       setLoadingCreate(true);
-      const response = await livrosApi.create(dadosLivro);
-      
-      setLivros(prev => [...prev, response.data]);
+      const data = await criarLivroApi(dadosLivro);
+
+      setLivros((prev) => [...prev, data]);
       fecharModalCadastro();
-      
+
       // Mostrar sucesso (você pode implementar um toast aqui)
-      alert('Livro cadastrado com sucesso!');
+      alert("Livro cadastrado com sucesso!");
     } catch (err) {
-      alert('Erro ao cadastrar livro: ' + err.message);
-      console.error('Erro ao criar livro:', err);
+      alert("Erro ao cadastrar livro: " + err.message);
+      console.error("Erro ao criar livro:", err);
     } finally {
       setLoadingCreate(false);
     }
@@ -77,19 +96,19 @@ const Livros = () => {
   const atualizarLivro = async (dadosLivro) => {
     try {
       setLoadingUpdate(true);
-      const response = await livrosApi.update(livroSelecionado.id, dadosLivro);
-      
-      setLivros(prev => prev.map(livro => 
-        livro.id === livroSelecionado.id ? response.data : livro
-      ));
-      
+      const data = await editarLivro(livroSelecionado.id, dadosLivro);
+
+      setLivros((prev) =>
+        prev.map((livro) => (livro.id === livroSelecionado.id ? data : livro))
+      );
+
       fecharModalEdicao();
       setLivroSelecionado(null);
-      
-      alert('Livro atualizado com sucesso!');
+
+      alert("Livro atualizado com sucesso!");
     } catch (err) {
-      alert('Erro ao atualizar livro: ' + err.message);
-      console.error('Erro ao atualizar livro:', err);
+      alert("Erro ao atualizar livro: " + err.message);
+      console.error("Erro ao atualizar livro:", err);
     } finally {
       setLoadingUpdate(false);
     }
@@ -99,17 +118,19 @@ const Livros = () => {
   const excluirLivro = async () => {
     try {
       setLoadingDelete(true);
-      await livrosApi.delete(livroSelecionado.id);
-      
-      setLivros(prev => prev.filter(livro => livro.id !== livroSelecionado.id));
-      
+      await deletarLivro(livroSelecionado.id);
+
+      setLivros((prev) =>
+        prev.filter((livro) => livro.id !== livroSelecionado.id)
+      );
+
       fecharModalExclusao();
       setLivroSelecionado(null);
-      
-      alert('Livro excluído com sucesso!');
+
+      alert("Livro excluído com sucesso!");
     } catch (err) {
-      alert('Erro ao excluir livro: ' + err.message);
-      console.error('Erro ao excluir livro:', err);
+      alert("Erro ao excluir livro: " + err.message);
+      console.error("Erro ao excluir livro:", err);
     } finally {
       setLoadingDelete(false);
     }
@@ -144,7 +165,7 @@ const Livros = () => {
           <FaBook className="title-icon" />
           <h1>Gerenciamento de Livros</h1>
         </div>
-        
+
         <Button
           variant="primary"
           icon={<FaPlus />}
@@ -157,11 +178,7 @@ const Livros = () => {
       {error && (
         <div className="error-message">
           {error}
-          <Button 
-            variant="ghost" 
-            size="small" 
-            onClick={() => carregarLivros()}
-          >
+          <Button variant="ghost" size="small" onClick={() => carregarLivros()}>
             Tentar novamente
           </Button>
         </div>
@@ -192,7 +209,7 @@ const Livros = () => {
             </Button>
           </div>
         ) : (
-          livros.map(livro => (
+          livros.map((livro) => (
             <LivroCard
               key={livro.id}
               livro={livro}
@@ -248,34 +265,38 @@ const Livros = () => {
               <label>Título:</label>
               <p>{livroSelecionado.titulo}</p>
             </div>
-            
+
             <div className="detalhe-grupo">
               <label>Autor:</label>
               <p>{livroSelecionado.autor}</p>
             </div>
-            
+
             <div className="detalhe-grupo">
               <label>ISBN:</label>
               <p>{livroSelecionado.isbn}</p>
             </div>
-            
+
             <div className="detalhe-grupo">
               <label>Categoria:</label>
               <p>{livroSelecionado.categoria}</p>
             </div>
-            
+
             <div className="detalhe-grupo">
               <label>Ano de Publicação:</label>
               <p>{livroSelecionado.anoPublicacao}</p>
             </div>
-            
+
             <div className="detalhe-grupo">
               <label>Status:</label>
-              <p className={`status ${livroSelecionado.disponivel ? 'disponivel' : 'indisponivel'}`}>
-                {livroSelecionado.disponivel ? 'Disponível' : 'Indisponível'}
+              <p
+                className={`status ${
+                  livroSelecionado.disponivel ? "disponivel" : "indisponivel"
+                }`}
+              >
+                {livroSelecionado.disponivel ? "Disponível" : "Indisponível"}
               </p>
             </div>
-            
+
             {livroSelecionado.descricao && (
               <div className="detalhe-grupo">
                 <label>Descrição:</label>
@@ -298,7 +319,7 @@ const Livros = () => {
             <p>Tem certeza que deseja excluir o livro:</p>
             <strong>"{livroSelecionado.titulo}"</strong>
             <p>Esta ação não pode ser desfeita.</p>
-            
+
             <div className="modal-actions">
               <Button
                 variant="secondary"

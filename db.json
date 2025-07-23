@@ -1,0 +1,78 @@
+{
+  "livros": [
+    {
+      "titulo": "Dom Casmurro",
+      "autor": "Machado de Assis",
+      "isbn": "9788594318602",
+      "categoria": "Romance",
+      "anoPublicacao": 2025,
+      "descricao": "Romance clássico da literatura brasileira que narra a história de Bentinho e Capitu",
+      "disponivel": true,
+      "id": "1"
+    },
+    {
+      "titulo": "O Pequeno Príncipe",
+      "autor": "Antoine de Saint-Exupéry",
+      "isbn": "9788595081413",
+      "categoria": "Ficção Científica",
+      "anoPublicacao": 2025,
+      "descricao": "Fábula poética sobre um pequeno príncipe que viaja entre planetas.",
+      "disponivel": true,
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "titulo": "Código Limpo",
+      "descricao": "Manual de boas práticas para desenvolvimento de software.",
+      "autor": "Robert C. Martin",
+      "isbn": "9788576082675"
+    },
+    {
+      "id": "5",
+      "titulo": "O Senhor dos Anéis",
+      "descricao": "Épica fantasia sobre a jornada para destruir o Um Anel.",
+      "autor": "J.R.R. Tolkien",
+      "isbn": "9788595084738"
+    },
+    {
+      "id": "048f",
+      "titulo": "Dom Casmurro2",
+      "autor": "Machado de Assis",
+      "isbn": "978859431815465",
+      "categoria": "Fantasia",
+      "anoPublicacao": 2025,
+      "descricao": "",
+      "disponivel": true
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "name": "Admin Biblioteca",
+      "email": "admin@biblioteca.com",
+      "telefone": "(24) 99999-9999s",
+      "cargo": "Bibliotecário Chefe"
+    },
+    {
+      "id": "2",
+      "name": "Maria Luiza",
+      "email": "admin@biblioteca.com",
+      "telefone": "(24) 99999-9999s",
+      "cargo": "Bibliotecária"
+    },
+    {
+      "id": "3",
+      "name": "Caique",
+      "email": "admin@biblioteca.com",
+      "telefone": "(24) 99999-9999s",
+      "cargo": "Bibliotecário"
+    },
+    {
+      "id": "4",
+      "name": "Renan",
+      "email": "admin@biblioteca.com",
+      "telefone": "(24) 99999-9999s",
+      "cargo": "Bibliotecário"
+    }
+  ]
+}

@@ -13,6 +13,12 @@ import UsuarioFormSimples from "../components/UsuarioFormSimples";
 import { usuariosApi } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import "./Usuarios.css";
+import {
+  buscarUsuarios,
+  criarUsuario,
+  deletarUsuario,
+  editarUsuario,
+} from "../services/apiUsuarios";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -32,9 +38,9 @@ const Usuarios = () => {
   const carregarUsuarios = async () => {
     try {
       setLoading(true);
-      const response = await usuariosApi.getAll();
-      setUsuarios(response.data);
-      setFilteredUsuarios(response.data);
+      const data = await buscarUsuarios();
+      setUsuarios(data);
+      setFilteredUsuarios(data);
     } catch (error) {
       console.error("Erro ao carregar usuários:", error);
       alert("Erro ao carregar usuários: " + error.message);
@@ -82,10 +88,10 @@ const Usuarios = () => {
       setLoadingForm(true);
 
       if (modoForm === "criar") {
-        await usuariosApi.create(dadosUsuario);
+        await criarUsuario(dadosUsuario);
         alert("Usuário criado com sucesso!");
       } else {
-        await usuariosApi.update(usuarioEditando.id, dadosUsuario);
+        await editarUsuario(usuarioEditando.id, dadosUsuario);
         alert("Usuário atualizado com sucesso!");
       }
 
@@ -107,7 +113,7 @@ const Usuarios = () => {
     ) {
       try {
         setLoading(true);
-        await usuariosApi.delete(usuario.id);
+        await deletarUsuario(usuario.id);
         alert("Usuário excluído com sucesso!");
         await carregarUsuarios();
       } catch (error) {
