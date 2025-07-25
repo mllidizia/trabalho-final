@@ -68,11 +68,12 @@
       "cargo": "Bibliotecário"
     },
     {
-      "id": "4",
-      "name": "Renan",
-      "email": "admin@biblioteca.com",
-      "telefone": "(24) 99999-9999s",
-      "cargo": "Bibliotecário"
+      "id": "2f45",
+      "name": "RENAN MANSO NEVES ",
+      "email": "ren0nmansoneves@gmail.com",
+      "telefone": "24999999999",
+      "cargo": "Bibliotecário",
+      "ativo": true
     }
   ]
 }
