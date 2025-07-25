@@ -149,9 +149,6 @@ const Usuarios = () => {
           </div>
           <div className="user-info">
             <span>{user?.name || user?.email}</span>
-            <Button variant="ghost" size="small" onClick={logout}>
-              Sair
-            </Button>
           </div>
         </div>
       </header>
