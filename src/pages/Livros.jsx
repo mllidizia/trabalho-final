@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { FaPlus, FaEdit, FaTrash, FaEye, FaBook } from "react-icons/fa";
 import { Button, Modal, Loading, Filter } from "../components";
-import { livrosApi, categorias } from "../services/api";
+import { categorias } from "../services/api";
 import { useToggle } from "../hooks";
 import LivroForm from "../components/LivroForm";
 import LivroCard from "../components/LivroCard";
@@ -49,8 +49,14 @@ const Livros = () => {
       setLoading(true);
       setError(null);
 
-      const data = await buscarLivros();
+      const filtrosParams = {
+        ...(filtros.categoria && { categoria: filtros.categoria }),
+        ...(filtros.disponivel !== undefined && {
+          disponivel: filtros.disponivel,
+        }),
+      };
 
+      const data = await buscarLivros(filtrosParams);
       setLivros(data);
     } catch (err) {
       setError("Erro ao carregar livros: " + err.message);
@@ -187,7 +193,7 @@ const Livros = () => {
       <Filter
         onFilterChange={handleFilterChange}
         categories={categorias}
-        placeholder="Pesquisar livros por título ou autor..."
+        hideSearch={true}
       />
 
       {loading && livros.length > 0 && (

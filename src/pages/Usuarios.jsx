@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { Button, Loading, Modal, Filter } from "../components";
 import UsuarioFormSimples from "../components/UsuarioFormSimples";
-import { usuariosApi } from "../services/api";
+
 import { useAuth } from "../context/AuthContext";
 import "./Usuarios.css";
 import {
