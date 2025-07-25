@@ -16,7 +16,7 @@ export const criarUsuario = async (novoUsuario) => {
 };
 
 export const editarUsuario = async (id, usuarioAtualizado) => {
-  const { data } = await api.put(`/usuarios/${id}`, livroAtualizado);
+  const { data } = await api.put(`/usuarios/${id}`, usuarioAtualizado);
   return data;
 };
 

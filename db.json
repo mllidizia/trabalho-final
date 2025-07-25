@@ -21,59 +21,76 @@
       "id": "3"
     },
     {
-      "id": "4",
       "titulo": "Código Limpo",
-      "descricao": "Manual de boas práticas para desenvolvimento de software.",
       "autor": "Robert C. Martin",
-      "isbn": "9788576082675"
+      "isbn": "9788576082675",
+      "categoria": "Tecnologia",
+      "anoPublicacao": 2016,
+      "descricao": "Manual de boas práticas para desenvolvimento de software.",
+      "disponivel": true,
+      "id": "4"
     },
     {
-      "id": "5",
       "titulo": "O Senhor dos Anéis",
-      "descricao": "Épica fantasia sobre a jornada para destruir o Um Anel.",
       "autor": "J.R.R. Tolkien",
-      "isbn": "9788595084738"
+      "isbn": "9788595084738",
+      "categoria": "Fantasia",
+      "anoPublicacao": 2011,
+      "descricao": "Épica fantasia sobre a jornada para destruir o Um Anel.",
+      "disponivel": true,
+      "id": "5"
     },
     {
-      "id": "048f",
       "titulo": "Dom Casmurro2",
       "autor": "Machado de Assis",
       "isbn": "978859431815465",
       "categoria": "Fantasia",
       "anoPublicacao": 2025,
       "descricao": "",
-      "disponivel": true
+      "disponivel": false,
+      "id": "048f"
     }
   ],
   "usuarios": [
     {
-      "id": "1",
       "name": "Admin Biblioteca",
       "email": "admin@biblioteca.com",
       "telefone": "(24) 99999-9999s",
-      "cargo": "Bibliotecário Chefe"
+      "cargo": "Bibliotecário Chefe",
+      "ativo": true,
+      "id": "1"
     },
     {
-      "id": "2",
       "name": "Maria Luiza",
       "email": "admin@biblioteca.com",
       "telefone": "(24) 99999-9999s",
-      "cargo": "Bibliotecária"
+      "cargo": "Bibliotecária",
+      "ativo": false,
+      "id": "2"
     },
     {
-      "id": "3",
       "name": "Caique",
       "email": "admin@biblioteca.com",
       "telefone": "(24) 99999-9999s",
-      "cargo": "Bibliotecário"
+      "cargo": "Bibliotecário",
+      "ativo": true,
+      "id": "3"
     },
     {
-      "id": "2f45",
-      "name": "RENAN MANSO NEVES ",
-      "email": "ren0nmansoneves@gmail.com",
-      "telefone": "24999999999",
+      "name": "Renan",
+      "email": "admin@biblioteca.com",
+      "telefone": "(24) 99999-9999s",
       "cargo": "Bibliotecário",
-      "ativo": true
+      "ativo": true,
+      "id": "4"
+    },
+    {
+      "name": "Ana",
+      "email": "ana@biblioteca.com",
+      "telefone": "",
+      "cargo": "Bibliotecário",
+      "ativo": true,
+      "id": "e98f"
     }
   ]
 }
