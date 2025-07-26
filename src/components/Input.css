@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 1rem;
 }
 
 .input-label {
@@ -84,7 +83,7 @@
     padding: 10px 12px;
     font-size: 0.9rem;
   }
-  
+
   .input-label {
     font-size: 0.85rem;
   }
